@@ -7,6 +7,7 @@ import simplejson
 #local project imports
 import hashes
 import entropy
+import filemagic
 
 ver = 0.1
 
@@ -23,9 +24,16 @@ def main():
         results.append(('md5',hashes.hash('md5', data)))
     if args.sha1 or args.all:
         results.append(('sha1', hashes.hash('sha1', data)))
+    if args.sha256 or args.all:
+        results.append(('sha256', hashes.hash('sha256', data)))
+    if args.sha512 or args.all:
+        results.append(('sha512', hashes.hash('sha512', data)))
 
     if args.entropy or args.all:
         results.append(('entropy', entropy.entropy(data)))
+
+    if args.magic or args.all:
+        results.append(('magic', filemagic.magic(data)))
 
     output(args.output, results)
 
@@ -44,7 +52,10 @@ def process_args():
     parser.add_argument('-a', '--all', action='store_true', help='Run all tools')
     parser.add_argument('--md5', action='store_true', help='MD5 hash of the file')
     parser.add_argument('--sha1', action='store_true', help='SHA1 hash of the file')
+    parser.add_argument('--sha256', action='store_true', help='SHA256 hash of the file')
+    parser.add_argument('--sha512', action='store_true', help='SHA512 hash of the file')
     parser.add_argument('--entropy', action='store_true', help='Entropy of the bytes of the file')
+    parser.add_argument('--magic', action='store_true', help='Type of the file, from libmagic')
     
     
     #print option 
