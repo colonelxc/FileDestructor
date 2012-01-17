@@ -1,0 +1,10 @@
+FileDestructor
+
+This program provides a wide variety of useful meta data about a given file.
+
+Tools implemented (or to be implemented) by this program include:
+
+Hashes (md5/sha1/sha256)
+Entropy
+File "Magic" identification
+
