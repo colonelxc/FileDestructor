@@ -6,6 +6,7 @@ import simplejson
 
 #local project imports
 import hashes
+import entropy
 
 ver = 0.1
 
@@ -23,7 +24,8 @@ def main():
     if args.sha1 or args.all:
         results.append(('sha1', hashes.hash('sha1', data)))
 
-
+    if args.entropy or args.all:
+        results.append(('entropy', entropy.entropy(data)))
 
     output(args.output, results)
 
@@ -42,6 +44,7 @@ def process_args():
     parser.add_argument('-a', '--all', action='store_true', help='Run all tools')
     parser.add_argument('--md5', action='store_true', help='MD5 hash of the file')
     parser.add_argument('--sha1', action='store_true', help='SHA1 hash of the file')
+    parser.add_argument('--entropy', action='store_true', help='Entropy of the bytes of the file')
     
     
     #print option 
