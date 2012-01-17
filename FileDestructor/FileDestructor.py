@@ -4,6 +4,7 @@ import argparse
 import sys
 import simplejson
 
+#local project imports
 import hashes
 
 ver = 0.1
@@ -16,11 +17,12 @@ def main():
     args.file.close()
 
 
-    results = dict()
+    results = list()
     if args.md5 or args.all:
-        results["md5"] = hashes.md5(data)
+        results.append(('md5',hashes.hash('md5', data)))
     if args.sha1 or args.all:
-        results["sha1"] = hashes.sha1(data)
+        results.append(('sha1', hashes.hash('sha1', data)))
+
 
 
     output(args.output, results)
@@ -51,7 +53,9 @@ def process_args():
 
 
 
-#print out the results
+"""Print out the results.
+Format is either 'text' or 'json'.
+results is a list of 2-tuples, such as [('md5', 'abc...'),('sha1','def...')]"""
 def output(format, results, out=sys.stdout):
 
     if results is None or len(results) == 0:
@@ -68,12 +72,11 @@ def output(format, results, out=sys.stdout):
     return 0
 
 def json_output(results, out=sys.stdout):
-    out.write(simplejson.dumps(results))
-    out.write('\n')
+    print >>out, simplejson.dumps(dict(results))
 
 def text_output(results, out=sys.stdout):
     for elem in results:
-        out.write("%s: %s\n" % (elem, results[elem]))
+        print >>out, "%s: %s" % elem
 
 if __name__ == '__main__':
     sys.exit(main())

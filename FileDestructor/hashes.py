@@ -1,16 +1,15 @@
 # Methods to perform hashes on the file
 import hashlib
 
-def md5(data):
-    md5 = hashlib.md5()
-    md5.update(data)
+def hash(hashtype, data):
+    hashtypes = set(['md5','sha1','sha256','sha512'])
 
-    return md5.hexdigest()
+    if data is None:
+        data = ''
 
-
-def sha1(data):
-    sha1 = hashlib.sha1()
-    sha1.update(data)
-
-    return sha1.hexdigest()
-    
+    if hashtype in hashtypes:
+        digest = hashlib.new(hashtype)
+        digest.update(data)
+        return digest.hexdigest()
+    else:
+        return "Invalid hash type"
