@@ -33,7 +33,7 @@ def main():
         results.append(('entropy', entropy.entropy(data)))
 
     if args.magic or args.all:
-        results.append(('magic', filemagic.magic(data)))
+        results.append(('magic', filemagic.filemagic(data)))
 
     output(args.output, results)
 
