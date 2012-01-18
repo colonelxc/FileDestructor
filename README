@@ -2,9 +2,55 @@ FileDestructor
 
 This program provides a wide variety of useful meta data about a given file.
 
-Tools implemented (or to be implemented) by this program include:
+Tools implemented by this program include:
 
-Hashes (md5/sha1/sha256)
-Entropy
+Hashes (md5/sha1/sha256/sha512)
+Entropy - calculated over the bytes in the file
 File "Magic" identification
 
+Example:
+
+FileDestructor/FileDestructor.py --file ~/test.pdf --all
+md5: 5636431907c46db701f412bd8f234c77
+sha1: 2838d929e33e49dd1ca5bfed03d8aa41366faa00
+sha256: 298ba2652abf60eecd45b8317fd75ffd8de9892f7fc160a5a1d03a5f35b6be57
+sha512: d6e66318bc1fca2adbeed97ef007aab63a7a635017f04c449c473d3da9fa8731a78bcd63891ffaf1fd18c743816acaa615fe030750a853fcc45408f1c09f2c67
+entropy: 7.84762587982
+magic: PDF document, version 1.4
+
+
+Usage
+> FileDestructor/FileDestructor.py -h
+usage: FileDestructor [-h] -f FILE [--version] [-a] [--md5] [--sha1]
+                      [--sha256] [--sha512] [--entropy] [--magic]
+                      [--output {text,json}]
+
+Generate metadata for a file
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -f FILE, --file FILE
+  --version             show program's version number and exit
+  -a, --all             Run all tools
+  --md5                 MD5 hash of the file
+  --sha1                SHA1 hash of the file
+  --sha256              SHA256 hash of the file
+  --sha512              SHA512 hash of the file
+  --entropy             Entropy of the bytes of the file
+  --magic               Type of the file, from libmagic
+  --output {text,json}  Print in either a simple text format (default) or json
+
+
+Dependencies:
+
+magic module for python - https://github.com/ahupp/python-magic
+nose for testing
+
+Notes:
+
+This program is pretty simple and there are better ways to do most of these individual items from your local linux command line.  For example:
+
+> md5sum file.txt # Outputs md5 hash of the file
+> file file.txt # determines filetype of the file, using the same libmagic library
+
+This program was mainly used to learn testing with nose, and argument parsing with argparse.
